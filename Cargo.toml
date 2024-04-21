@@ -1,5 +1,6 @@
 [workspace]
 members = [
+    "echor",
     "template",
 ]
 resolver = "2"

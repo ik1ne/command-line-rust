@@ -5,5 +5,6 @@ members = [
     "2-catr",
     "3-headr",
     "4-wcr",
+    "5-uniqr",
 ]
 resolver = "2"

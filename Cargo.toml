@@ -3,5 +3,6 @@ members = [
     "0-template",
     "1-echor",
     "2-catr",
+    "3-headr",
 ]
 resolver = "2"

@@ -4,5 +4,6 @@ members = [
     "1-echor",
     "2-catr",
     "3-headr",
+    "4-wcr",
 ]
 resolver = "2"

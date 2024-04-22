@@ -6,5 +6,6 @@ members = [
     "3-headr",
     "4-wcr",
     "5-uniqr",
+    "6-findr",
 ]
 resolver = "2"

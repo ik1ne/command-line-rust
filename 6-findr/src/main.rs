@@ -1,6 +1,9 @@
+use anyhow::Result;
 use clap::builder::PossibleValue;
 use clap::{ArgAction, Parser, ValueEnum};
 use regex::Regex;
+use std::fs;
+use walkdir::{DirEntry, WalkDir};
 
 #[derive(Debug, Parser)]
 struct Args {
@@ -49,5 +52,65 @@ impl ValueEnum for EntryType {
 
 fn main() {
     let args = Args::parse();
-    dbg!(args);
+
+    if let Err(e) = run(args) {
+        eprintln!("{e}");
+        std::process::exit(1);
+    }
+}
+
+fn run(args: Args) -> Result<()> {
+    let name_filter =
+        |name: &str| args.names.is_empty() || args.names.iter().any(|re| re.is_match(name));
+    let type_filter = |file_type: fs::FileType| {
+        args.entry_type.is_empty()
+            || args.entry_type.iter().any(|t| match t {
+                EntryType::Dir => file_type.is_dir(),
+                EntryType::File => file_type.is_file(),
+                EntryType::Link => file_type.is_symlink(),
+            })
+    };
+
+    for path in args.path {
+        for entry in WalkDir::new(path) {
+            match entry {
+                Ok(entry) => {
+                    if !name_filter(&entry.file_name().to_string_lossy()) {
+                        continue;
+                    }
+
+                    if !type_filter(entry.file_type()) {
+                        continue;
+                    }
+
+                    println!("{}", entry.path().display());
+                }
+                Err(e) => eprintln!("{e}"),
+            }
+        }
+    }
+
+    Ok(())
+}
+
+fn matches_name(entry: &DirEntry, names: &[Regex]) -> bool {
+    if names.is_empty() {
+        return true;
+    }
+
+    names
+        .iter()
+        .any(|name| name.is_match(&entry.file_name().to_string_lossy()))
+}
+
+fn matches_type(entry: &DirEntry, types: &Vec<EntryType>) -> bool {
+    if types.is_empty() {
+        return true;
+    }
+
+    types.iter().any(|t| match t {
+        EntryType::Dir => entry.file_type().is_dir(),
+        EntryType::File => entry.file_type().is_file(),
+        EntryType::Link => entry.file_type().is_symlink(),
+    })
 }

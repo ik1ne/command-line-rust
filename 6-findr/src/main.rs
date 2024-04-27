@@ -1,9 +1,10 @@
+use std::fs;
+
 use anyhow::Result;
 use clap::builder::PossibleValue;
 use clap::{ArgAction, Parser, ValueEnum};
 use regex::Regex;
-use std::fs;
-use walkdir::{DirEntry, WalkDir};
+use walkdir::WalkDir;
 
 #[derive(Debug, Parser)]
 struct Args {
@@ -91,26 +92,4 @@ fn run(args: Args) -> Result<()> {
     }
 
     Ok(())
-}
-
-fn matches_name(entry: &DirEntry, names: &[Regex]) -> bool {
-    if names.is_empty() {
-        return true;
-    }
-
-    names
-        .iter()
-        .any(|name| name.is_match(&entry.file_name().to_string_lossy()))
-}
-
-fn matches_type(entry: &DirEntry, types: &Vec<EntryType>) -> bool {
-    if types.is_empty() {
-        return true;
-    }
-
-    types.iter().any(|t| match t {
-        EntryType::Dir => entry.file_type().is_dir(),
-        EntryType::File => entry.file_type().is_file(),
-        EntryType::Link => entry.file_type().is_symlink(),
-    })
 }

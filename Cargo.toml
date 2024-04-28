@@ -7,6 +7,7 @@ members = [
     "4-wcr",
     "5-uniqr",
     "6-findr",
-    "7-cutr"
+    "7-cutr",
+    "8-grepr",
 ]
 resolver = "2"

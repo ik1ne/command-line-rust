@@ -43,7 +43,7 @@ fn run(args: Args) -> Result<()> {
         .with_context(|| format!(r#"Invalid pattern "{}""#, args.pattern))?;
 
     let paths = find_files(&args.files, args.recursive);
-    let file_count = paths.iter().count();
+    let file_count = paths.len();
 
     for path in paths {
         let (file, path) = match path {

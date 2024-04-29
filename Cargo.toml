@@ -9,5 +9,6 @@ members = [
     "6-findr",
     "7-cutr",
     "8-grepr",
+    "9-commr",
 ]
 resolver = "2"

@@ -1,7 +1,6 @@
 use anyhow::Result;
 use assert_cmd::Command;
 use predicates::prelude::*;
-use pretty_assertions::assert_eq;
 use rand::{distributions::Alphanumeric, Rng};
 use std::fs;
 
@@ -133,8 +132,7 @@ fn run_outfiles(args: &[&str], out_file: &str, err_file: &str) -> Result<()> {
     let output = Command::cargo_bin(PRG)?.args(args).output().expect("fail");
     assert!(output.status.success());
 
-    let stdout =
-        String::from_utf8(output.clone().stdout).expect("invalid UTF-8");
+    let stdout = String::from_utf8(output.clone().stdout).expect("invalid UTF-8");
     assert_eq!(stdout, expected_out);
 
     let stderr = String::from_utf8(output.stderr).expect("invalid UTF-8");

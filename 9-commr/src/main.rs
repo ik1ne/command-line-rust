@@ -87,16 +87,16 @@ fn run(args: Args) -> Result<()> {
                 };
                 match cmp {
                     Ordering::Less => {
-                        print(Col1(&line1));
+                        print(Col1(line1));
                         line1_opt = file1.next().transpose()?;
                     }
                     Ordering::Equal => {
-                        print(Col3(&line1));
+                        print(Col3(line1));
                         line1_opt = file1.next().transpose()?;
                         line2_opt = file2.next().transpose()?;
                     }
                     Ordering::Greater => {
-                        print(Col2(&line2));
+                        print(Col2(line2));
                         line2_opt = file2.next().transpose()?;
                     }
                 }

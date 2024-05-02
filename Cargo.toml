@@ -12,5 +12,6 @@ members = [
     "9-commr",
     "10-tailr",
     "11-fortuner",
+    "12-calr",
 ]
 resolver = "2"

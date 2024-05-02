@@ -104,6 +104,22 @@ dependencies = [
 ]
 
 [[package]]
+name = "calr"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "assert_cmd",
+ "clap",
+ "predicates",
+ "pretty_assertions",
+ "rand",
+ "regex",
+ "sys-info",
+ "tempfile",
+ "walkdir",
+]
+
+[[package]]
 name = "catr"
 version = "0.1.0"
 dependencies = [

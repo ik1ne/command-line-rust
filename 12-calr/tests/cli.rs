@@ -1,7 +1,6 @@
 use anyhow::Result;
 use assert_cmd::Command;
 use predicates::prelude::*;
-use pretty_assertions::assert_eq;
 use std::fs;
 
 const PRG: &str = "calr";
@@ -9,11 +8,13 @@ const PRG: &str = "calr";
 // --------------------------------------------------
 #[test]
 fn dies_year_0() -> Result<()> {
-    Command::cargo_bin(PRG)?.arg("0").assert().failure().stderr(
-        predicate::str::contains(
+    Command::cargo_bin(PRG)?
+        .arg("0")
+        .assert()
+        .failure()
+        .stderr(predicate::str::contains(
             "error: invalid value '0' for '[YEAR]': 0 is not in 1..=9999",
-        ),
-    );
+        ));
     Ok(())
 }
 
